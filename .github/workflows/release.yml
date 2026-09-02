@@ -1,0 +1,54 @@
+name: Release module
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Read and validate tag version
+        id: version
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Unsupported version tag: $GITHUB_REF_NAME" >&2
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Update release manifest
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          TAG: ${{ github.ref_name }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path("module.json")
+          manifest = json.loads(path.read_text(encoding="utf-8"))
+          manifest["version"] = os.environ["VERSION"]
+          manifest["manifest"] = f"https://github.com/{os.environ['REPOSITORY']}/releases/latest/download/module.json"
+          manifest["download"] = f"https://github.com/{os.environ['REPOSITORY']}/releases/download/{os.environ['TAG']}/pf2e-chat-filter.zip"
+          path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Build module archive
+        run: zip -r pf2e-chat-filter.zip module.json scripts styles lang README.md LICENSE
+
+      - name: Create GitHub release and upload assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" module.json pf2e-chat-filter.zip --generate-notes --verify-tag

@@ -1,0 +1,21 @@
+{
+  "pf2e-chat-filter": {
+    "filterChat": "Filter chat by player",
+    "allPlayers": "All players",
+    "includeRelated": "Include related messages",
+    "resetFilter": "Reset filter",
+    "online": "Online",
+    "offline": "Offline",
+    "filtered": "Filtered: {users}",
+    "multipleSelection": "Multiple selection possible",
+    "ownMessagesOnly": "Own messages only",
+    "includingRelated": "Including related messages",
+    "buttonTitleOwn": "Chat filter: {users} (own messages only)",
+    "buttonTitleRelated": "Chat filter: {users} (including related messages)",
+    "includeRelatedHint": "Also show messages concerning the player, such as targeting, damage, or whispers.",
+    "settings": {
+      "selectedUsers": { "name": "Selected players" },
+      "includeRelated": { "name": "Include related messages" }
+    }
+  }
+}
