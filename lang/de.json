@@ -1,0 +1,21 @@
+{
+  "pf2e-chat-filter": {
+    "filterChat": "Chat nach Spieler filtern",
+    "allPlayers": "Alle Spieler",
+    "includeRelated": "Bezug einbeziehen",
+    "resetFilter": "Filter zurücksetzen",
+    "online": "Online",
+    "offline": "Offline",
+    "filtered": "Gefiltert: {users}",
+    "multipleSelection": "Mehrfachauswahl möglich",
+    "ownMessagesOnly": "Nur eigene Nachrichten",
+    "includingRelated": "Inklusive Bezug",
+    "buttonTitleOwn": "Chat-Filter: {users} (nur eigene Nachrichten)",
+    "buttonTitleRelated": "Chat-Filter: {users} (inklusive Bezug)",
+    "includeRelatedHint": "Auch Nachrichten anzeigen, die den Spieler betreffen, etwa als Ziel, bei Schaden oder als Whisper-Empfänger.",
+    "settings": {
+      "selectedUsers": { "name": "Ausgewählte Spieler" },
+      "includeRelated": { "name": "Bezug einbeziehen" }
+    }
+  }
+}
